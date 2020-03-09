@@ -12,6 +12,7 @@ void main() {
     title: 'Flutter Demo',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
+      fontFamily: 'ProximaNova',
       appBarTheme: AppBarTheme(
         brightness: Brightness.light,
         elevation: 0,

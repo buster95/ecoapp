@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animator/animator.dart';
+import 'package:ecoapp/widgets/textField.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,61 +10,86 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> {
   bool displayed = true;
-  AnimationController animationController;
-  AnimationController animationController2;
-  Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    // animationController = new AnimationController(
-    //   duration: new Duration(seconds: 30),
-    //   vsync: this,
-    // );
-    // animationController.repeat();
-
-    // _animation = new Tween<double>(
-    //   begin: 0,
-    //   end: 5,
-    // ).animate(animationController)
-    //   ..addStatusListener((status) {
-    //     if (status == AnimationStatus.completed) {
-    //       animationController.reverse();
-    //     } else if (status == AnimationStatus.dismissed) {
-    //       animationController.forward();
-    //     }
-    //   });
-    // _animation.
-
-    // animationController2 = new AnimationController(
-    //   duration: new Duration(milliseconds: 500),
-    //   vsync: this,
-    // );
-    // animationController2.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    animationController.dispose();
-  }
+  Color green = Color(0xff3C8769);
+  double worldPosition = 20;
 
   @override
   Widget build(BuildContext context) {
     // Future.delayed(Duration(seconds: 2), () {});
     return Scaffold(
-      body: Container(
+      // resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
         child: Stack(
+          overflow: Overflow.clip,
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height,
               color: Color(0xff2DBEEA),
             ),
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 1200),
+              width: MediaQuery.of(context).size.width,
+              top: displayed ? 0 : worldPosition + 300,
+              curve: Curves.elasticOut,
+              child: Center(
+                child: Container(
+                  width: 350,
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 40,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 35),
+                      Text(
+                        'Eco App',
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      CustomTextField(
+                        labelText: 'Correo Electronico',
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      SizedBox(height: 20),
+                      CustomTextField(
+                        labelText: 'Contrasena',
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 20),
+                      RaisedButton(
+                        color: this.green,
+                        elevation: 10,
+                        child: Text(
+                          'Iniciar Sesion',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            displayed = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Positioned(
-              top: 10,
+              top: worldPosition,
               child: Animator(
                 repeats: 0,
                 duration: Duration(seconds: 30),
@@ -79,7 +105,7 @@ class _LoginPageState extends State<LoginPage>
               ),
             ),
             Positioned(
-              top: 100,
+              top: worldPosition + 80,
               left: 50,
               child: Animator(
                 // repeats: 0, // REPEAT FROM START
@@ -98,78 +124,83 @@ class _LoginPageState extends State<LoginPage>
               ),
             ),
             Positioned(
-              top: 200,
+              top: worldPosition + 200,
               right: 50,
               child: Animator(
                 // repeats: 0, // REPEAT FROM START
                 cycles: 0, // REVERSE ANIMATION
                 duration: Duration(milliseconds: 500),
                 resetAnimationOnRebuild: false,
-                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(2, 5)),
+                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(-2, 5)),
                 builder: (anim) => Transform.translate(
                   offset: anim.value,
                   child: Container(
                     height: 100,
                     width: 100,
-                    child: Image.asset('resources/nube2.png'),
+                    child: Image.asset('resources/nube3.png'),
                   ),
                 ),
-              ),
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 250),
-              height: displayed ? MediaQuery.of(context).size.height - 60 : 0,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xff334339),
-                boxShadow: [
-                  new BoxShadow(
-                    color: Colors.black,
-                    blurRadius: 10.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35),
-                ),
-              ),
-              child: Column(
-                textDirection: TextDirection.ltr,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Text(
-                    'EcoApp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'La naturaleza no hace nada incompleto ni nada en vano',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
-                  ),
-                ],
               ),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 1000),
+              top: displayed ? 0 : (MediaQuery.of(context).size.height * -1),
+              bottom: displayed ? 69 : MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height,
+              // height: displayed ? MediaQuery.of(context).size.height - 70 : 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: this.green,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      blurRadius: 10.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(14),
+                    bottomRight: Radius.circular(14),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'EcoApp',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'La naturaleza no hace nada incompleto ni nada en vano',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 500),
               bottom: displayed ? 10 : -50,
               width: MediaQuery.of(context).size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
-                    color: Color(0xff334339),
+                    color: this.green,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     elevation: 10,
                     child: Text(
                       'INICIA A CAMBIAR EL MUNDO',
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     onPressed: () {
                       setState(() {
@@ -179,7 +210,7 @@ class _LoginPageState extends State<LoginPage>
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
