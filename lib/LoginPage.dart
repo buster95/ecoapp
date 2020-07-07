@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool displayed = true;
+  bool displayed = false;
   Color green = Color(0xff3C8769);
   double worldPosition = 20;
 
