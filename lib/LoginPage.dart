@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       // resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Stack(
-          overflow: Overflow.clip,
+          // overflow: Overflow.clip,
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height,
@@ -70,9 +70,16 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                       ),
                       SizedBox(height: 20),
-                      RaisedButton(
-                        color: this.green,
-                        elevation: 10,
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(this.green),
+                          padding: WidgetStateProperty.all(
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          ),
+                          elevation: WidgetStateProperty.all(10),
+                        ),
+                        // color: this.green,
+                        // elevation: 10,
                         child: Text(
                           'Iniciar Sesion',
                           style: TextStyle(color: Colors.white, fontSize: 18),
@@ -90,12 +97,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Positioned(
               top: worldPosition,
-              child: Animator(
+              child: Animator<double>(
                 repeats: 0,
                 duration: Duration(seconds: 30),
                 tween: Tween<double>(begin: 0, end: 2 * pi),
-                builder: (anim) => Transform.rotate(
-                  angle: anim.value,
+                builder: (context, animationState, child) => Transform.rotate(
+                  angle: animationState.value,
                   child: Container(
                     height: 350,
                     width: MediaQuery.of(context).size.width,
@@ -113,8 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                 duration: Duration(milliseconds: 500),
                 resetAnimationOnRebuild: false,
                 tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(2, 5)),
-                builder: (anim) => Transform.translate(
-                  offset: anim.value,
+                builder: (context, animatorState, child) => Transform.translate(
+                  offset: animatorState.value,
                   child: Container(
                     height: 100,
                     width: 100,
@@ -132,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                 duration: Duration(milliseconds: 500),
                 resetAnimationOnRebuild: false,
                 tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(-2, 5)),
-                builder: (anim) => Transform.translate(
-                  offset: anim.value,
+                builder: (context, animatorState, child) => Transform.translate(
+                  offset: animatorState.value,
                   child: Container(
                     height: 100,
                     width: 100,
@@ -194,10 +201,17 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                    color: this.green,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    elevation: 10,
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.white),
+                      padding: WidgetStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      ),
+                      elevation: WidgetStateProperty.all(10),
+                    ),
+                    // color: this.green,
+                    // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    // elevation: 10,
                     child: Text(
                       'INICIA A CAMBIAR EL MUNDO',
                       style: TextStyle(color: Colors.white, fontSize: 20),

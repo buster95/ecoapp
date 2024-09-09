@@ -14,16 +14,17 @@ void main() {
     theme: ThemeData(
       fontFamily: 'ProximaNova',
       appBarTheme: AppBarTheme(
-        brightness: Brightness.light,
+
+        // brightness: Brightness.light,
         elevation: 0,
         color: ThemeData.light().canvasColor,
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        // textTheme: TextTheme(
+        //   title: TextStyle(
+        //     color: Colors.black,
+        //     fontSize: 24,
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        // ),
       ),
       primarySwatch: Colors.green,
     ),
